@@ -2,7 +2,7 @@
 
 # 定义变量
 APP_NAME="pdf-distributor"
-PORT=8501
+PORT=10031
 
 # 颜色输出
 GREEN='\033[0;32m'
@@ -45,11 +45,11 @@ fi
 # 6. 启动新容器
 # -v $(pwd)/baidu_token.json:/app/baidu_token.json 确保授权不过期
 # -v $(pwd)/WM.Feishu.png:/app/WM.Feishu.png 挂载水印文件（如果有）
-echo -e "${GREEN}>>> 启动新容器...${NC}"
+echo -e "${GREEN}>>> 启动新容器 (宿主机端口: ${PORT} -> 容器端口: 8501)...${NC}"
 docker run -d \
   --name ${APP_NAME} \
   --restart unless-stopped \
-  -p ${PORT}:8501 \
+  -p ${PORT}:${PORT} \
   --env-file .env \
   -v "$(pwd)/baidu_token.json":/app/baidu_token.json \
   ${APP_NAME}:latest
