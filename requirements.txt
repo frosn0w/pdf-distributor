@@ -1,4 +1,5 @@
 streamlit>=1.30.0
-pymupdf>=1.23.0
+pymupdf==1.23.26
 requests>=2.31.0
 watchdog>=3.0.0
+python-dotenv

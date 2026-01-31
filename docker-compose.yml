@@ -1,15 +1,14 @@
-version: '3.8'
 services:
   pdf-app:
     build: .
-    container_name: pdf_worker
+    container_name: pdf-distributor
     restart: always
-    # 限制仅监听回环地址，确保只有 Outline 连接后可访问
     ports:
-      - "127.0.0.1:8501:8501" 
+      - "10031:10031"
     env_file:
-      - .env  # 关键：告诉 Docker 从 .env 加载变量
+      - .env
     volumes:
       - ./baidu_token.json:/app/baidu_token.json
+      - ./output_cache:/app/output_cache
     environment:
       - TZ=Asia/Shanghai

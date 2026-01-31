@@ -1,6 +1,5 @@
 # 使用官方轻量级 Python 镜像
 FROM python:3.10-slim
-
 # 设置工作目录
 WORKDIR /app
 
@@ -9,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # 确保控制台输出不被缓冲
 ENV PYTHONUNBUFFERED=1
 
-# 安装系统依赖（适应新版 Debian 和 ARM 架构）
+# 安装系统依赖：PyMuPDF 需要基本的构建工具
 RUN apt-get update && apt-get install -y \
     build-essential \
     libgl1 \
@@ -20,10 +19,12 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 复制项目代码
 COPY . .
 
-# 暴露 Streamlit 默认端口
+# 创建缓存目录并确保权限
+RUN mkdir -p /app/output_cache && chmod 777 /app/output_cache
+
+# 暴露端口与 deploy.sh 保持一致
 EXPOSE 10031
 
 # 启动命令
